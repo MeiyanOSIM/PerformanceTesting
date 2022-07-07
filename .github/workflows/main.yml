@@ -1,36 +1,35 @@
-# This is a basic workflow to help you get started with Actions
+name: Run Jmeter File
 
-name: CI
-
-# Controls when the workflow will run
 on:
-  # Triggers the workflow on push or pull request events but only for the "main" branch
-  push:
-    branches: [ "main" ]
-  pull_request:
-    branches: [ "main" ]
+# Set your workflow to run every day of the week from Monday to Friday at 2:00 UTC
+  schedule:
+  - cron: "0 2 * * 1-5"
 
   # Allows you to run this workflow manually from the Actions tab
   workflow_dispatch:
 
-# A workflow run is made up of one or more jobs that can run sequentially or in parallel
 jobs:
   # This workflow contains a single job called "build"
   build:
-    # The type of runner that the job will run on
     runs-on: ubuntu-latest
-
-    # Steps represent a sequence of tasks that will be executed as part of the job
     steps:
-      # Checks-out your repository under $GITHUB_WORKSPACE, so your job can access it
       - uses: actions/checkout@v3
-
-      # Runs a single command using the runners shell
-      - name: Run a one-line script
-        run: echo Hello, world!
-
-      # Runs a set of commands using the runners shell
-      - name: Run a multi-line script
+      - uses: actions/setup-java@v1
+        with:
+          java-version:'8.0.282'
+          java-package:jdk
+          architecture:x64
+    -name: install jmeter
+        timeout-minutes: 10
+        env:
+          JMETER_VERSION:5.5
         run: |
-          echo Add other actions to build,
-          echo test, and deploy your project.
+          wget --no-verbose --no-check-certificate -0 /tmp/apache-jmeter.tgz https://jmeter.apache.org/download_jmeter.cgi
+          cd /tmp && tar -xvf apache-jmeter.tgz
+    -name: run jmeter
+      run: |
+        /opt/jmeter/bin/jmeter.sh \
+          -t .PerformanceTesting/*.jmx \
+          -l jmeter_logs/pf.jtl \
+          -j jmeter_logs/pf.log
+
