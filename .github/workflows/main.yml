@@ -9,7 +9,7 @@ on:
   workflow_dispatch:
 
 jobs:
-  # This workflow contains a single job called "build"
+  # This workflow contains a single job called "runPFTest"
   runPFTest:
     runs-on: ubuntu-latest
     steps:
@@ -26,16 +26,29 @@ jobs:
         env:
           JMETER_VERSION: 5.5
         run: |
-          wget --no-verbose --no-check-certificate -O /tmp/apache-jmeter.tgz https://dlcdn.apache.org//jmeter/binaries/apache-jmeter-5.5.tgz
+          wget --no-verbose --no-check-certificate -O /tmp/apache-jmeter.tgz https://dlcdn.apache.org//jmeter/binaries/apache-jmeter-$JMETER_VERSION.tgz
           cd /tmp && tar -xvf apache-jmeter.tgz
+          echo "jmeter.save.saveservice.output_format=xml" >> /tmp/apache-jmeter-$JMETER_VERSION/bin/jmeter.properties
+          echo "jmeter.save.saveservice.response_data.on_error=true" >> /tmp/apache-jmeter-$JMETER_VERSION/bin/jmeter.properties
           ln -s /tmp/apache-jmeter-$JMETER_VERSION /opt/jmeter
       - name: run jmeter
         run: |
           /opt/jmeter/bin/jmeter.sh \
-          -n \
+          -Jjmeter.save.saveservice.output_format=xml -n \
           -t *.jmx \
           -l jmeter_logs/pf.jtl \
           -e \
           -o jmeter_report/PerfTestReport
           -j jmeter_logs/pf.log
-
+          
+      - name: check logs
+        run: |
+          if ! tail -n 1 jmeter_logs/pf.log | grep -oE 'Err:[ \t]*0' > /dev/null 2>&1;
+            exit 1
+          fi
+      - uses: actions/upload-artifact@v1
+        if: failure()
+        with:
+          name: jmeter_logs_pf
+          path: ./jmeter_logs
+      
