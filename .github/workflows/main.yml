@@ -10,7 +10,7 @@ on:
 
 jobs:
   # This workflow contains a single job called "build"
-  build:
+  runPFTest:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v3
@@ -19,17 +19,17 @@ jobs:
           java-version:'8.0.282'
           java-package:jdk
           architecture:x64
-    -name: install jmeter
-        timeout-minutes: 10
-        env:
+      -name: install jmeter
+      timeout-minutes:10
+      env:
           JMETER_VERSION:5.5
-        run: |
+      run: |
           wget --no-verbose --no-check-certificate -0 /tmp/apache-jmeter.tgz https://jmeter.apache.org/download_jmeter.cgi
           cd /tmp && tar -xvf apache-jmeter.tgz
-    -name: run jmeter
+      -name: runjmeter
       run: |
         /opt/jmeter/bin/jmeter.sh \
-          -t .PerformanceTesting/*.jmx \
-          -l jmeter_logs/pf.jtl \
-          -j jmeter_logs/pf.log
+        -t .PerformanceTesting/*.jmx \
+        -l jmeter_logs/pf.jtl \
+        -j jmeter_logs/pf.log
 
