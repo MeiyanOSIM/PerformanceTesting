@@ -19,6 +19,9 @@ jobs:
           java-version: '8.0.282'
           java-package: jdk
           architecture: x64
+      - name: check JAVA version
+        run:
+          java -version
       - name: install jmeter
         env:
           JMETER_VERSION: 5.5
@@ -26,10 +29,13 @@ jobs:
           wget --no-verbose --no-check-certificate -O /tmp/apache-jmeter.tgz https://dlcdn.apache.org//jmeter/binaries/apache-jmeter-5.5.tgz
           cd /tmp && tar -xvf apache-jmeter.tgz
           ln -s /tmp/apache-jmeter-$JMETER_VERSION /opt/jmeter
-      - name: runjmeter
+      - name: run jmeter
         run: |
           /opt/jmeter/bin/jmeter.sh \
+          -n \
           -t *.jmx \
           -l jmeter_logs/pf.jtl \
+          -e \
+          -o jmeter_report/PerfTestReport
           -j jmeter_logs/pf.log
 
