@@ -25,10 +25,11 @@ jobs:
         run: |
           wget --no-verbose --no-check-certificate -O /tmp/apache-jmeter.tgz https://dlcdn.apache.org//jmeter/binaries/apache-jmeter-5.5.tgz
           cd /tmp && tar -xvf apache-jmeter.tgz
+          ln -S /tmp/apache-jmeter-$JMETER_VERSION /opt/jmeter
       - name: runjmeter
         run: |
           /opt/jmeter/bin/jmeter.sh \
-          -t .PerformanceTesting/*.jmx \
+          -t *.jmx \
           -l jmeter_logs/pf.jtl \
           -j jmeter_logs/pf.log
 
