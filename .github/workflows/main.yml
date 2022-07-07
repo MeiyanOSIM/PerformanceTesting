@@ -25,7 +25,7 @@ jobs:
         run: |
           wget --no-verbose --no-check-certificate -O /tmp/apache-jmeter.tgz https://dlcdn.apache.org//jmeter/binaries/apache-jmeter-5.5.tgz
           cd /tmp && tar -xvf apache-jmeter.tgz
-          ln -S /tmp/apache-jmeter-$JMETER_VERSION /opt/jmeter
+          ln -s /tmp/apache-jmeter-$JMETER_VERSION /opt/jmeter
       - name: runjmeter
         run: |
           /opt/jmeter/bin/jmeter.sh \
