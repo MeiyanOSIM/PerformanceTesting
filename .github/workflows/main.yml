@@ -16,20 +16,19 @@ jobs:
       - uses: actions/checkout@v3
       - uses: actions/setup-java@v1
         with:
-          java-version:'8.0.282'
-          java-package:jdk
-          architecture:x64
-      -name: install jmeter
-      timeout-minutes:10
-      env:
-          JMETER_VERSION:5.5
-      run: |
+          java-version: '8.0.282'
+          java-package: jdk
+          architecture: x64
+      - name: install jmeter
+        env:
+          JMETER_VERSION: 5.5
+        run: |
           wget --no-verbose --no-check-certificate -0 /tmp/apache-jmeter.tgz https://jmeter.apache.org/download_jmeter.cgi
           cd /tmp && tar -xvf apache-jmeter.tgz
-      -name: runjmeter
-      run: |
-        /opt/jmeter/bin/jmeter.sh \
-        -t .PerformanceTesting/*.jmx \
-        -l jmeter_logs/pf.jtl \
-        -j jmeter_logs/pf.log
+      - name: runjmeter
+        run: |
+          /opt/jmeter/bin/jmeter.sh \
+          -t .PerformanceTesting/*.jmx \
+          -l jmeter_logs/pf.jtl \
+          -j jmeter_logs/pf.log
 
