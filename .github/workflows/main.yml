@@ -31,6 +31,8 @@ jobs:
           echo "jmeter.save.saveservice.output_format=xml" >> /tmp/apache-jmeter-$JMETER_VERSION/bin/jmeter.properties
           echo "jmeter.save.saveservice.response_data.on_error=true" >> /tmp/apache-jmeter-$JMETER_VERSION/bin/jmeter.properties
           ln -s /tmp/apache-jmeter-$JMETER_VERSION /opt/jmeter
+          mkdir /home/runner/work/PerformanceTesting/PerformanceTesting/jmeter_report/PerfTestReport
+          
       - name: run jmeter
         run: |
           /opt/jmeter/bin/jmeter.sh \
@@ -43,7 +45,8 @@ jobs:
           
       - name: check logs
         run: |
-          if ! tail -n 1 jmeter_logs/pf.log | grep -oE 'Err:[ \t]*0' > /dev/null 2>&1;
+          if cat jmeter_logs/pf.log | grep -e '<failure>true</failure>' > /dev/n
+            echo "check logs filed"
             exit 1
           fi
       - uses: actions/upload-artifact@v1
