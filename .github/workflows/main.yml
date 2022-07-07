@@ -23,7 +23,7 @@ jobs:
         env:
           JMETER_VERSION: 5.5
         run: |
-          wget --no-verbose --no-check-certificate -0 /tmp/apache-jmeter.tgz https://jmeter.apache.org/download_jmeter.cgi
+          wget --no-verbose --no-check-certificate -O /tmp/apache-jmeter.tgz https://dlcdn.apache.org//jmeter/binaries/apache-jmeter-5.5.tgz
           cd /tmp && tar -xvf apache-jmeter.tgz
       - name: runjmeter
         run: |
