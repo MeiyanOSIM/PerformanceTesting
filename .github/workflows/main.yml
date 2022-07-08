@@ -44,13 +44,6 @@ jobs:
           -e \
           -o jmeter_report/PerfTestReport
           
-          
-      - name: check logs
-        run: |
-          if cat jmeter_logs/pf.log | grep -e '<failure>true</failure>' > /dev/n
-            echo "check logs filed"
-            exit 1
-          fi
       - uses: actions/upload-artifact@v1
         if: failure()
         with:
