@@ -43,10 +43,9 @@ jobs:
           -j jmeter_logs/pf.log \
           -e \
           -o jmeter_report/PerfTestReport
-          
-      - uses: actions/upload-artifact@v1
-        if: failure()
-        with:
-          name: jmeter_logs_pf
-          path: ./jmeter_logs
       
+      - name: Upload Results
+        uses: actions/upload-artifact@v2
+        with:
+          name: PerfTestReport
+          path: /home/runner/work/PerformanceTesting/PerformanceTesting
