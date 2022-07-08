@@ -37,7 +37,7 @@ jobs:
       - name: run jmeter
         run: |
           /opt/jmeter/bin/jmeter.sh \
-          -Jjmeter.save.saveservice.output_format=xml -n \
+          -n \
           -t *.jmx \
           -l jmeter_logs/pf.jtl \
           -e \
