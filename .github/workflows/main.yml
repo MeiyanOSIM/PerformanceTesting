@@ -28,7 +28,7 @@ jobs:
         run: |
           wget --no-verbose --no-check-certificate -O /tmp/apache-jmeter.tgz https://dlcdn.apache.org//jmeter/binaries/apache-jmeter-$JMETER_VERSION.tgz
           cd /tmp && tar -xvf apache-jmeter.tgz
-          # echo "jmeter.save.saveservice.output_format = xml" >> /tmp/apache-jmeter-$JMETER_VERSION/bin/jmeter.properties
+          echo "jmeter.save.saveservice.output_format=csv" >> /tmp/apache-jmeter-$JMETER_VERSION/bin/jmeter.properties
           echo "jmeter.save.saveservice.response_data.on_error=true" >> /tmp/apache-jmeter-$JMETER_VERSION/bin/jmeter.properties
           ln -s /tmp/apache-jmeter-$JMETER_VERSION /opt/jmeter
           mkdir -p -m 777 /home/runner/work/PerformanceTesting/PerformanceTesting/jmeter_report/PerfTestReport
