@@ -31,7 +31,7 @@ jobs:
           echo "jmeter.save.saveservice.output_format=xml" >> /tmp/apache-jmeter-$JMETER_VERSION/bin/jmeter.properties
           echo "jmeter.save.saveservice.response_data.on_error=true" >> /tmp/apache-jmeter-$JMETER_VERSION/bin/jmeter.properties
           ln -s /tmp/apache-jmeter-$JMETER_VERSION /opt/jmeter
-          mkdir /home/runner/work/PerformanceTesting/PerformanceTesting/jmeter_report/PerfTestReport
+          mkdir -p -m 777 /home/runner/work/PerformanceTesting/PerformanceTesting/jmeter_report/PerfTestReport
           
       - name: run jmeter
         run: |
