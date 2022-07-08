@@ -228,7 +228,7 @@ ${__setProperty(newrefreshToken_${__threadNum},${refToken})}</stringProp>
             <connectTime>true</connectTime>
           </value>
         </objProp>
-        <stringProp name="filename">.\PF001.jtl</stringProp>
+        <stringProp name="filename">PF001.jtl</stringProp>
       </ResultCollector>
       <hashTree/>
       <ConfigTestElement guiclass="HttpDefaultsGui" testclass="ConfigTestElement" testname="HTTP Request Defaults" enabled="true">
