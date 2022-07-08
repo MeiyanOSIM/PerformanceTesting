@@ -40,9 +40,10 @@ jobs:
           -n \
           -t *.jmx \
           -l jmeter_logs/pf.jtl \
+          -j jmeter_logs/pf.log \
           -e \
           -o jmeter_report/PerfTestReport
-          -j jmeter_logs/pf.log
+          
           
       - name: check logs
         run: |
