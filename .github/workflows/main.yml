@@ -32,20 +32,20 @@ jobs:
           echo "jmeter.save.saveservice.response_data.on_error=true" >> /tmp/apache-jmeter-$JMETER_VERSION/bin/jmeter.properties
           ln -s /tmp/apache-jmeter-$JMETER_VERSION /opt/jmeter
           mkdir -p -m 777 /home/runner/work/PerformanceTesting/PerformanceTesting/jmeter_report/PerfTestReport
-          mkdir -p -m 777 /home/runner/work/PerformanceTesting/PerformanceTesting/jmeter_logs
+          mkdir -p -m 777 /home/runner/work/PerformanceTesting/PerformanceTesting/jmeter_report/jmeter_logs
           
       - name: run jmeter
         run: |
           /opt/jmeter/bin/jmeter.sh \
           -n \
           -t *.jmx \
-          -l jmeter_logs/pf.jtl \
-          -j jmeter_logs/pf.log \
+          -l jmeter_report/jmeter_logs/pf.jtl \
+          -j jmeter_report/jmeter_logs/pf.log \
           -e \
           -o jmeter_report/PerfTestReport
       
       - name: Upload Results
         uses: actions/upload-artifact@v2
         with:
-          name: PerfTestReport
-          path: /home/runner/work/PerformanceTesting/PerformanceTesting
+          name: PerfTestReport+$time
+          path: /home/runner/work/PerformanceTesting/PerformanceTesting/jmeter_report
