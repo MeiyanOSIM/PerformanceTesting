@@ -3,7 +3,7 @@ name: Run Jmeter File
 on:
   schedule:
   #- cron: "0 2 * * 1-5" # Set your workflow to run every day of the week from Monday to Friday at 2:00 UTC
-  - cron: "30 7 * * 5"
+  #- cron: "30 7 * * 5"
 
   # Allows you to run this workflow manually from the Actions tab
   workflow_dispatch:
